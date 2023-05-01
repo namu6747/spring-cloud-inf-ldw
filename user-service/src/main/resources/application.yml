@@ -1,0 +1,18 @@
+server:
+  port: 0
+  # ide configuration VM Options
+  # build script => mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=9003'
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true # Eureka 갱신 정보를 받아온다.
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka # eureka 등록
+    
