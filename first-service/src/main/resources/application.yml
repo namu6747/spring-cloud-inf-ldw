@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 0 # 랜덤포트. 하지만 인스턴스를 여러개 생성해도 유레카 서버에서 목록까지 하나로 나타나서 문제가 생김.
 
 spring:
   application:
@@ -7,5 +7,9 @@ spring:
 
 eureka:
   client:
-    fetch-registry: false
-    register-with-eureka: false
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
