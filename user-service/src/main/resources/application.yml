@@ -1,18 +1,35 @@
 server:
   port: 0
-  # ide configuration VM Options
-  # build script => mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=9003'
 
 spring:
   application:
     name: user-service
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+
+debug: true
 
 eureka:
   instance:
-    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
-    fetch-registry: true # Eureka 갱신 정보를 받아온다.
+    fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka # eureka 등록
-    
+      defaultZone: http://127.0.0.1:8761/eureka
+
+greeting:
+  message: welcome to the simple e-commerce.
