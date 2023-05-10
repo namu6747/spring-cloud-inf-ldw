@@ -3,15 +3,22 @@ package com.cloud.userservice.service;
 import com.cloud.userservice.dto.UserDto;
 import com.cloud.userservice.jpa.UserEntity;
 import com.cloud.userservice.jpa.UserRepository;
+import com.cloud.userservice.response.ResponseOrder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -29,6 +36,7 @@ public class UserServiceImpl implements UserService {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserEntity userEntity = mapper.map(userDto, UserEntity.class);
         userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPwd()));
+
         UserEntity savedUserEntity = null;
         try {
             savedUserEntity = userRepository.save(userEntity);
@@ -38,13 +46,29 @@ public class UserServiceImpl implements UserService {
             if (e.getCause() instanceof ConstraintViolationException) {
                 ConstraintViolationException cause = (ConstraintViolationException) e.getCause();
                 log.info("cause.getConstraintName():{}", cause.getConstraintName());
-                log.info("cause.getSQLState():{}", cause.getSQLState()); // todo
-                log.info("cause.getErrorCode():{}", cause.getErrorCode()); // todo
+                log.info("cause.getSQLState():{}", cause.getSQLState());
+                log.info("cause.getErrorCode():{}", cause.getErrorCode());
             }
-            log.warn("e.getSuppressed().getClass().getSimpleName:{}", e.getSuppressed().getClass().getSimpleName());
-            log.warn("e.getMostSpecificCause().getCause().getClass().getSimpleName:{}", e.getMostSpecificCause().getCause().getClass().getSimpleName());
+            return null;
         }
         log.info("savedUserEntity: {}", savedUserEntity);
         return mapper.map(savedUserEntity, UserDto.class);
+    }
+
+    @Override
+    public UserDto getUserByUserId(String userId) {
+        UserEntity userEntity = userRepository.findUserByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found : " + userId));
+
+        ModelMapper modelMapper = new ModelMapper();
+        UserDto userDto = modelMapper.map(userEntity, UserDto.class);
+        List<ResponseOrder> ordersList = new ArrayList<>();
+        userDto.setOrders(ordersList);
+        return userDto;
+    }
+
+    @Override
+    public Iterable<UserEntity> getUserByAll() {
+        return userRepository.findAll();
     }
 }
