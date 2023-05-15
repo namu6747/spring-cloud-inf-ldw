@@ -22,9 +22,17 @@ spring:
       routes:
         # forward to load balancing uri when uri accords with given predicates pattern
         - id: user-service
-          uri: lb://USER-SERVICE # name used in eureka
+          uri: lb://USER-SERVICE # name used in eureka server
           predicates:
             - Path=/user-service/**
+        - id: catalog-service
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/catalog-service/**
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/**
         - id: first-service
 #          uri: http://localhost:8081/
           uri: lb://MY-FIRST-SERVICE
