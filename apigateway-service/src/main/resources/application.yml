@@ -24,7 +24,27 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE # name used in eureka server
           predicates:
-            - Path=/user-service/**
+            - Path=/user-service/login
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+            uri: lb://USER-SERVICE # name used in eureka server
+            predicates:
+              - Path=/user-service/users
+              - Method=POST
+            filters:
+              - RemoveRequestHeader=Cookie
+              - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+            uri: lb://USER-SERVICE # name used in eureka server
+            predicates:
+              - Path=/user-service/**
+              - Method=GET
+            filters:
+              - RemoveRequestHeader=Cookie
+              - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
@@ -33,26 +53,3 @@ spring:
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/**
-        - id: first-service
-#          uri: http://localhost:8081/
-          uri: lb://MY-FIRST-SERVICE
-          predicates:
-            - Path=/first-service/**
-          filters:
-#            - AddRequestHeader=first-request, first-requests-header2
-#            - AddResponseHeader=first-response, first-responses-header2
-            - CustomFilter
-        - id: second-service
-#          uri: http://localhost:8082/
-          uri: lb://MY-SECOND-SERVICE
-          predicates:
-            - Path=/second-service/**
-          filters:
-#            - AddRequestHeader=second-request, second-requests-header2
-#            - AddResponseHeader=second-response, second-responses-header2
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: logggggggggg
-                preLogger: true
-                postLogger: true
