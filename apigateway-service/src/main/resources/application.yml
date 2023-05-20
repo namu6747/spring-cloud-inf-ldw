@@ -20,31 +20,30 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        # forward to load balancing uri when uri accords with given predicates pattern
         - id: user-service
           uri: lb://USER-SERVICE # name used in eureka server
-          predicates:
+          predicates: # forward to load balancing uri when uri accords with given predicates pattern
             - Path=/user-service/login
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: user-service
-            uri: lb://USER-SERVICE # name used in eureka server
-            predicates:
-              - Path=/user-service/users
-              - Method=POST
-            filters:
-              - RemoveRequestHeader=Cookie
-              - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: user-service
-            uri: lb://USER-SERVICE # name used in eureka server
-            predicates:
-              - Path=/user-service/**
-              - Method=GET
-            filters:
-              - RemoveRequestHeader=Cookie
-              - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
