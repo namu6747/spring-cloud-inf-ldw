@@ -3,34 +3,30 @@ package com.cloud.userservice.controller;
 import com.cloud.userservice.dto.ServerInfoDto;
 import com.cloud.userservice.dto.UserDto;
 import com.cloud.userservice.jpa.UserEntity;
-import com.cloud.userservice.response.ResponseOrder;
 import com.cloud.userservice.response.ResponseUser;
 import com.cloud.userservice.service.UserService;
 import com.cloud.userservice.vo.Greeting;
 import com.cloud.userservice.vo.UserCond;
 import com.cloud.userservice.vo.UserResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
-import org.apache.coyote.Response;
-import org.bouncycastle.math.raw.Mod;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -45,14 +41,6 @@ public class UserController {
 
     @GetMapping("/health-check")
     public ServerInfoDto status() throws Exception {
-        String[] activeProfiles = environment.getActiveProfiles();
-        for (String activeProfile : activeProfiles) {
-            log.info("active {}:[{}]", activeProfile, environment.getProperty(activeProfile));
-        }
-        String[] defaultProfiles = environment.getDefaultProfiles();
-        for (String defaultProfile : defaultProfiles) {
-            log.info("default {}:[{}]", defaultProfile, environment.getProperty(defaultProfile));
-        }
         ServerInfoDto serverInfoDto = new ServerInfoDto();
         serverInfoDto.setHost(Inet4Address.getLocalHost().getHostAddress());
         serverInfoDto.setPort(environment.getProperty("local.server.port"));
@@ -61,7 +49,9 @@ public class UserController {
     }
 
     @GetMapping("/welcome")
-    public String welcome() {
+    public String welcome(HttpServletRequest request) throws Exception{
+        log.info("InetAddress.getByName(request.getRemoteAddr()) : {}", InetAddress.getByName(request.getRemoteAddr()));
+        log.info("request.getRemoteAddr : {}", request.getRemoteAddr());
         return greeting.message();
     }
 

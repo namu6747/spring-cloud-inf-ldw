@@ -16,12 +16,17 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     generate-ddl: true
     defer-datasource-initialization: true
 
-debug: true
+logging:
+  level:
+    com.cloud.userservice: debug
+    root: debug
+    org.apache.coyote.http11: debug
+    org.springframework.boot.autoconfigure.logging: error
 
 eureka:
   instance:
