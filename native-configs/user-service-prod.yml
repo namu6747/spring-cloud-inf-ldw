@@ -1,0 +1,6 @@
+token:
+  expiration_time: 22222222222
+  secret: useruseruseruseruseruseruseruseruseruseruseruseruseruseruseruser
+
+gateway:
+  ip: 127.0.0.1

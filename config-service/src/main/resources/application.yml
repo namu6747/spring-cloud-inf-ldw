@@ -7,11 +7,18 @@ users:
 spring:
   application:
     name: config-service
+  profiles:
+    active: native
   cloud:
     config:
       server:
+        native:
+          search-locations: file:///${user.home}/Desktop/study/workspace/inflearn/spring-cloud-inf-ldw/native-configs
         git:
-          uri: file:///${user.home}/Desktop/study/workspace/inflearn/spring-cloud-inf-ldw/configs
+#          uri: file:///${user.home}/Desktop/study/workspace/inflearn/spring-cloud-inf-ldw/configs
+          uri: https://github.com/namu6747/spring-cloud-inf-ldw
+          search-paths:
+            - configs
 
 debug: true
 logging:

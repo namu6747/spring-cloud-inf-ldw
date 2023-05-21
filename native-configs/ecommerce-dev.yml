@@ -1,0 +1,6 @@
+token:
+  expiration_time: 1111111111
+  secret: ecommerceecommerceecommerceecommerceecommerceecommerceecommerce
+
+gateway:
+  ip: 127.0.0.1
