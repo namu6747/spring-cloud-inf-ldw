@@ -15,6 +15,6 @@ public class LoginCond {
 
     @NotNull(message = "Password cannot be null")
     @Size(min = 8, message = "Password must be equal or grater than 8 characters and less than 16 characters")
-    private String password;
+    private String pwd;
 
 }

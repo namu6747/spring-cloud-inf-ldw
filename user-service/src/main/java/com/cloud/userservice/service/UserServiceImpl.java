@@ -4,6 +4,7 @@ import com.cloud.userservice.dto.UserDto;
 import com.cloud.userservice.jpa.UserEntity;
 import com.cloud.userservice.jpa.UserRepository;
 import com.cloud.userservice.response.ResponseOrder;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
@@ -80,5 +81,15 @@ public class UserServiceImpl implements UserService {
         return User.withUsername(userEntity.getEmail())
                 .password(userEntity.getEncryptedPwd())
                 .authorities(AuthorityUtils.NO_AUTHORITIES).build();
+    }
+
+    @Override
+    public UserDto getUserDetailsByEmail(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(
+                () -> new EntityNotFoundException(email)
+        );
+
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(userEntity, UserDto.class);
     }
 }

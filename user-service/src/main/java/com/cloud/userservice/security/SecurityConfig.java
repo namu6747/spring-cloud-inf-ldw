@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -25,10 +26,10 @@ public class SecurityConfig {
     private final ApplicationContext applicationContext;
     private final ObjectPostProcessor<Object> objectPostProcessor;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final Environment environment;
 
     private static final String[] WHITE_LIST = {
             "/users/**",
-            "/",
             "/**"
     };
 
@@ -46,8 +47,7 @@ public class SecurityConfig {
     }
 
     private AuthenticationFilter authenticationFilter() throws Exception {
-        var authenticationFilter = new AuthenticationFilter(authenticationManager());
-        return authenticationFilter;
+        return new AuthenticationFilter(userService, environment, authenticationManager());
     }
 
     private AuthenticationManager authenticationManager() throws Exception {
