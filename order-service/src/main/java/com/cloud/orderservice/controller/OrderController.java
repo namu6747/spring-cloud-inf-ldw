@@ -28,7 +28,7 @@ public class OrderController {
     private final OrderService orderService;
     private final Environment environment;
 
-    @GetMapping("/health-check")
+    @GetMapping("/health_check")
     public ServerInfo status() throws Exception {
         String[] activeProfiles = environment.getActiveProfiles();
         for (String activeProfile : activeProfiles) {

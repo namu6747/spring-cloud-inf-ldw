@@ -26,7 +26,7 @@ public class CatalogController {
     private final CatalogService catalogService;
     private final Environment environment;
 
-    @GetMapping("/health-check")
+    @GetMapping("/health_check")
     public ServerInfoDto status() throws Exception {
         String[] activeProfiles = environment.getActiveProfiles();
         for (String activeProfile : activeProfiles) {
