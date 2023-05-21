@@ -1,0 +1,9 @@
+# It has a higher priority than application.yml.
+
+spring:
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      name: ecommerce
+  profiles:
+    active: dev
