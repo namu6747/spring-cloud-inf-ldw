@@ -1,0 +1,6 @@
+token:
+  expiration_time: 864000000
+  secret: 12345678901234567890123456789012345678901234567dev
+
+gateway:
+  ip: ::1
