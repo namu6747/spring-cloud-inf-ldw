@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: user-service
+  cloud:
+    bootstrap:
+      enabled: true
   h2:
     console:
       enabled: true
@@ -24,7 +27,6 @@ spring:
 logging:
   level:
     com.cloud.userservice: debug
-    root: debug
     org.apache.coyote.http11: debug
     org.springframework.boot.autoconfigure.logging: error
 
@@ -40,3 +42,13 @@ eureka:
 
 greeting:
   message: welcome to the simple e-commerce.
+
+#token:
+#  expiration_time: 864000000 # 24 * 60 * 60 * 1000
+#  secret: 12345678901234567890123456789012345678901234567890
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans

@@ -1,6 +1,5 @@
 package com.cloud.userservice.controller;
 
-import com.cloud.userservice.dto.ServerInfoDto;
 import com.cloud.userservice.dto.UserDto;
 import com.cloud.userservice.jpa.UserEntity;
 import com.cloud.userservice.response.ResponseUser;
@@ -24,6 +23,7 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -39,13 +39,20 @@ public class UserController {
         log.warn("\n\nserver port : {}\n", environment.getProperty("local.server.port"));
     }
 
-    @GetMapping("/health-check")
-    public ServerInfoDto status() throws Exception {
-        ServerInfoDto serverInfoDto = new ServerInfoDto();
-        serverInfoDto.setHost(Inet4Address.getLocalHost().getHostAddress());
-        serverInfoDto.setPort(environment.getProperty("local.server.port"));
-        serverInfoDto.setMessage(greeting.message());
-        return serverInfoDto;
+    @GetMapping("/health_check")
+    public Map<String, Object> status() throws Exception {
+        String host = Inet4Address.getLocalHost().getHostAddress();
+        String localPort = environment.getProperty("local.server.port");
+        String message = greeting.message();
+        String port = environment.getProperty("server.port");
+        String tokenSecret = environment.getProperty("token.secret");
+        String tokenExpirationTime = environment.getProperty("token.expiration_time");
+        return Map.of("host", host,
+                "localPort", localPort,
+                "message", message,
+                "port", port,
+                "tokenSecret", tokenSecret,
+                "tokenExpirationTime", tokenExpirationTime);
     }
 
     @GetMapping("/welcome")
