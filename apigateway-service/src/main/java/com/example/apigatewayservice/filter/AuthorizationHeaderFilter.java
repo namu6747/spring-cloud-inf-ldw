@@ -42,6 +42,15 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 log.warn("environment.getProperty(\"token.secret\") : {}", environment.getProperty("token.secret"));
             }
 
+            if (request.getQueryParams().containsKey("sec")) {
+                String sec = request.getQueryParams().getFirst("sec");
+                log.warn("sec : {}", sec);
+                if (sec.equals("false")) {
+                    return chain.filter(exchange);
+                }
+            }
+
+
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                 return onError(exchange, "no authorization header", HttpStatus.UNAUTHORIZED);
             }

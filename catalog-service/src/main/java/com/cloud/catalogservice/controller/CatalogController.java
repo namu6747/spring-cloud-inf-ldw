@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.Inet4Address;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/catalog-service")
+@RequestMapping("/")
 public class CatalogController {
     private final CatalogService catalogService;
     private final Environment environment;

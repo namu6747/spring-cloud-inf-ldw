@@ -12,7 +12,6 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.Inet4Address;
 import java.net.URI;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/order-service")
+@RequestMapping("/")
 public class OrderController {
 
     private final OrderService orderService;
