@@ -1,6 +1,6 @@
 token:
   expiration_time: 22222222222
-  secret: useruseruseruseruseruseruseruseruseruseruseruseruseruseruseruser
+  secret: changedsecretchangedsecretchangedsecretchangedsecretchangedsecwikrpwkrpwkprkwpr
 
 gateway:
   ip: 127.0.0.1

@@ -7,6 +7,11 @@ users:
 spring:
   application:
     name: config-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   profiles:
     active: native
   cloud:
@@ -16,12 +21,19 @@ spring:
           search-locations: file:///${user.home}/Desktop/study/workspace/inflearn/spring-cloud-inf-ldw/native-configs
         git:
 #          uri: file:///${user.home}/Desktop/study/workspace/inflearn/spring-cloud-inf-ldw/configs
-          uri: https://github.com/namu6747/spring-cloud-inf-ldw
-          search-paths:
-            - configs
+#          uri: https://github.com/namu6747/spring-cloud-inf-ldw
+#          search-paths:
+#            - configs
 
 debug: true
+
 logging:
   level:
     root: debug
     org.springframework.boot.autoconfigure: error
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,httptrace,busrefresh
