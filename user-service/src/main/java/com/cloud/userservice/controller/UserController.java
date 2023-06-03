@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/welcome")
-    public String welcome(HttpServletRequest request) throws Exception{
+    public String welcome(HttpServletRequest request) throws Exception {
         log.info("InetAddress.getByName(request.getRemoteAddr()) : {}", InetAddress.getByName(request.getRemoteAddr()));
         log.info("request.getRemoteAddr : {}", request.getRemoteAddr());
         return greeting.message();
@@ -90,4 +90,5 @@ public class UserController {
         ModelMapper modelMapper = new ModelMapper();
         return ResponseEntity.ok(modelMapper.map(userDto, ResponseUser.class));
     }
+
 }
