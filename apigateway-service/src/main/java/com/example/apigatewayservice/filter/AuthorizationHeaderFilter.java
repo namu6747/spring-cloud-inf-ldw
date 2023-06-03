@@ -39,12 +39,17 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             ServerHttpRequest request = exchange.getRequest();
 
             if (log.isInfoEnabled()) {
-                log.warn("environment.getProperty(\"token.secret\") : {}", environment.getProperty("token.secret"));
+                log.warn("environment.getProperty(\"token.secret\") :{}", environment.getProperty("token.secret"));
+                log.warn("URI :{}", request.getURI().toString());
+                log.warn("URI :{}", request.getURI().toASCIIString());
+                log.warn("Path :{}", request.getPath().toString());
+                log.warn("Id :{}", request.getId());
+                log.warn("Headers :{}", request.getHeaders().toString());
             }
 
             if (request.getQueryParams().containsKey("sec")) {
                 String sec = request.getQueryParams().getFirst("sec");
-                log.warn("sec : {}", sec);
+                log.warn("sec :{}", sec);
                 if (sec.equals("false")) {
                     return chain.filter(exchange);
                 }
@@ -55,7 +60,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 return onError(exchange, "no authorization header", HttpStatus.UNAUTHORIZED);
             }
             String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-            String token = authorizationHeader.replace("Bearer", "");
+            String token = authorizationHeader.replace("Bearer ", "");
 
             if (!isJwtValid(token)) {
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
@@ -82,18 +87,18 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
              * 하지만 서명이 없는 JWT 토큰도 parse()를 사용하여 파싱할 수 있습니다.
              */
             Jwt jwt = jwtParser.parse(token);
-            log.info("jwtToken.getHeader() : {}", jwt.getHeader());
-            log.info("jwtToken.getBody() : {}", jwt.getBody());
+            log.info("jwtToken.getHeader() :{}", jwt.getHeader());
+            log.info("jwtToken.getBody() :{}", jwt.getBody());
 
             Jws<Claims> jws = jwtParser.parseClaimsJws(token);
-            log.info("jws.getHeader() : {}", jws.getHeader());
-            log.info("jws.getBody() : {}", jws.getBody());
-            log.info("jws.getSignature() : {}", jws.getSignature());
+            log.info("jws.getHeader() :{}", jws.getHeader());
+            log.info("jws.getBody() :{}", jws.getBody());
+            log.info("jws.getSignature() :{}", jws.getSignature());
 
             subject = jws.getBody().getSubject();
-            log.info("subject : {}", subject);
+            log.info("subject :{}", subject);
         } catch (Exception e) {
-            log.error("jwt error : ", e);
+            log.error("jwt parse Exception:{}", token, e);
             return false;
         }
 
