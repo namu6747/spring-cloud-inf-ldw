@@ -1,6 +1,0 @@
-encrypt:
-#  key: jaeminstar
-  key-store:
-    location: file:///${user.home}/Desktop/study/workspace/inflearn/spring-cloud-inf-ldw/keystore/apiEncryptionKey.jks
-    password: 1q2w3e4r
-    alias: apiEncryptionKey

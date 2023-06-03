@@ -9,16 +9,19 @@ spring:
       enabled: true
       settings:
         web-allow-others: true
+  config:
+    import: "optional:configserver:"
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     generate-ddl: true
     defer-datasource-initialization: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
@@ -30,3 +33,9 @@ eureka:
 logging:
   level:
     com.cloud.orderservice: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,busrefresh,httptrace
