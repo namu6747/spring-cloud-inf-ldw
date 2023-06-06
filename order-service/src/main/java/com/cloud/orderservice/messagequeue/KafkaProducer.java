@@ -1,4 +1,4 @@
-package com.cloud.orderservice.kafka;
+package com.cloud.orderservice.messagequeue;
 
 import com.cloud.orderservice.dto.OrderDto;
 import com.fasterxml.jackson.core.JsonProcessingException;

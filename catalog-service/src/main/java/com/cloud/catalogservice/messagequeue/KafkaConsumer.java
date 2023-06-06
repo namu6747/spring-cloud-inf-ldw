@@ -1,4 +1,4 @@
-package com.cloud.catalogservice.kafka;
+package com.cloud.catalogservice.messagequeue;
 
 import com.cloud.catalogservice.jpa.CatalogEntity;
 import com.cloud.catalogservice.jpa.CatalogRepository;

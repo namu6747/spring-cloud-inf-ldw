@@ -1,7 +1,7 @@
 package com.cloud.orderservice.controller;
 
 import com.cloud.orderservice.dto.OrderDto;
-import com.cloud.orderservice.kafka.KafkaProducer;
+import com.cloud.orderservice.messagequeue.KafkaProducer;
 import com.cloud.orderservice.service.OrderService;
 import com.cloud.orderservice.vo.RequestOrder;
 import com.cloud.orderservice.vo.ResponseOrder;
