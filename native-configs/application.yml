@@ -4,10 +4,13 @@ token:
 
 spring:
   datasource:
+    url: jdbc:mariadb://127.0.0.1:3307/mydb
+    username: root
+    password: '{cipher}AQDIIRsmb2Ib1jurOxCHtuhQ/OK3cSukFAzeLP3H9nGyqr4zfg8MX1XgSxIp+gL94jD7v/Lsnpc4Mhw1IlYEyYm1hvRLaDWP472h3CcG7YMLu+38J9MYNoHkd/awS35/8A6XAu2+33O9uTrwDAohGJqeqDjb1p6vUJox/h75XXCCdy0H1dhU7bgXGNArpI9hz2FrCYwuAUdGFFPbkbJpWLqyk0G40sIoF6LwqTYc7mgYhZBi+J+fXGm46B2/Fx+vKwbGrWTTpmpFdiJ9ay/eod7BKQfiSnExwFcTgXGTcBdWkdv8kYbAjOv5i1zlrY4rqxHacoh/9d06CYIxOF1JWgOcjxvONu9N+lS0toJWG/iAYJI5p5yRd+9as60c36FO3+U='
     # url: jdbc:h2:tcp://localhost/~/cloud
-    url: jdbc:h2:mem:testdb
-    username: namu
-    password: '{cipher}AQAp2Grw+4tZjSWT5KTWrSb3U99OCEAvYZ2TcofS8BMuk4yREWkxX2dMCZ4+SU1fFn/RnTOYZ5UpR3crQJvI1tnL3HJVT0fJpxb4Mh1g8Dpfq+U7zDGsdw0trg4HZq7n4PJLlXR1V1Vx23nUE5CEQBIIg89SWKQMaXezIwp9xv7wDdXOKNtaMDLUYTJvqBx2QrrhSntt7SFpR05z0sM1ugmy1ZP1TXT9UYL1qOIjjg7eYm3xIc3X7ddwQsjZykpPP1VxkXHZLjjy5X9UTm+raIDadQNGpewX8VT9J8rz+VtEupB6vyRgR4DihjKR9CISrMsYac6r1FX9t9QG2ZgumF96kCwm6UP1aTjDKOfDS0v0prRoIOC9wLLgcBC3IEwUzkU=' # 1234
+    # url: jdbc:h2:mem:testdb
+    # username: namu
+    # password: '{cipher}AQAp2Grw+4tZjSWT5KTWrSb3U99OCEAvYZ2TcofS8BMuk4yREWkxX2dMCZ4+SU1fFn/RnTOYZ5UpR3crQJvI1tnL3HJVT0fJpxb4Mh1g8Dpfq+U7zDGsdw0trg4HZq7n4PJLlXR1V1Vx23nUE5CEQBIIg89SWKQMaXezIwp9xv7wDdXOKNtaMDLUYTJvqBx2QrrhSntt7SFpR05z0sM1ugmy1ZP1TXT9UYL1qOIjjg7eYm3xIc3X7ddwQsjZykpPP1VxkXHZLjjy5X9UTm+raIDadQNGpewX8VT9J8rz+VtEupB6vyRgR4DihjKR9CISrMsYac6r1FX9t9QG2ZgumF96kCwm6UP1aTjDKOfDS0v0prRoIOC9wLLgcBC3IEwUzkU=' # 1234
 
 gateway:
   ip: 127.0.0.1

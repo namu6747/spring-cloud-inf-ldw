@@ -81,6 +81,9 @@ spring:
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalog-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/catalog-service/(?<segment>.*), /$\{segment}
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
