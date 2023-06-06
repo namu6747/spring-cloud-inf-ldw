@@ -32,8 +32,11 @@ public class KafkaConsumer {
         }
 
         CatalogEntity catalogEntity = catalogRepository.findByProductId((String) map.get("productId"));
-        catalogEntity.setStock(catalogEntity.getStock() - (Integer) map.get("quantity"));
-        // JPA save는 존재할 때 update로 실행된다.
-        catalogRepository.save(catalogEntity);
+
+        if (catalogEntity != null) {
+            catalogEntity.setStock(catalogEntity.getStock() - (Integer) map.get("quantity"));
+            // JPA save는 존재할 때 update로 실행된다.
+            catalogRepository.save(catalogEntity);
+        }
     }
 }

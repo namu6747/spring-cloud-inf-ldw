@@ -2,6 +2,7 @@ package com.cloud.orderservice.controller;
 
 import com.cloud.orderservice.dto.OrderDto;
 import com.cloud.orderservice.messagequeue.KafkaProducer;
+import com.cloud.orderservice.messagequeue.OrderProducer;
 import com.cloud.orderservice.service.OrderService;
 import com.cloud.orderservice.vo.RequestOrder;
 import com.cloud.orderservice.vo.ResponseOrder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.Inet4Address;
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,6 +30,7 @@ public class OrderController {
     private final OrderService orderService;
     private final Environment environment;
     private final KafkaProducer kafkaProducer;
+    private final OrderProducer orderProducer;
 
     @GetMapping("/health_check")
     public ServerInfo status() throws Exception {
@@ -63,13 +66,19 @@ public class OrderController {
 
         OrderDto orderDto = modelMapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
-        OrderDto createdOrder = orderService.createOrder(orderDto);
+        // JPA
+//        OrderDto createdOrder = orderService.createOrder(orderDto);
+//        ResponseOrder responseOrder = modelMapper.map(createdOrder, ResponseOrder.class);
 
-        ResponseOrder responseOrder = modelMapper.map(createdOrder, ResponseOrder.class);
+        // kafka
+        orderDto.setOrderId(UUID.randomUUID().toString());
+        orderDto.setTotalPrice(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+        ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
 
         kafkaProducer.send("example-order-topic", orderDto);
+        orderProducer.send("orders", orderDto);
 
-        return ResponseEntity.created(URI.create("/orders/" + createdOrder.getOrderId())).body(responseOrder);
+        return ResponseEntity.created(URI.create("/orders/" + responseOrder.getOrderId())).body(responseOrder);
     }
 
     @GetMapping("/orders/{id}")
