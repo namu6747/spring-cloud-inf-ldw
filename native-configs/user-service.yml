@@ -2,3 +2,7 @@ order-service:
   url: http://ORDER-SERVICE/%s/orders
   exception:
     orders-is-empty: User's orders is empty.
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: ERROR

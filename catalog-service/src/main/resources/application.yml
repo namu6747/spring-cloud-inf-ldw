@@ -31,3 +31,6 @@ eureka:
       default-zone: http://127.0.0.1:8761/eureka
 
 debug: true
+logging:
+  level:
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: ERROR

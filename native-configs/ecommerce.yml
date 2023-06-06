@@ -1,2 +1,6 @@
 gateway:
   ip: 127.0.0.1
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: ERROR
