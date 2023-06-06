@@ -1,6 +1,7 @@
 package com.cloud.orderservice.controller;
 
 import com.cloud.orderservice.dto.OrderDto;
+import com.cloud.orderservice.kafka.KafkaProducer;
 import com.cloud.orderservice.service.OrderService;
 import com.cloud.orderservice.vo.RequestOrder;
 import com.cloud.orderservice.vo.ResponseOrder;
@@ -26,6 +27,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final Environment environment;
+    private final KafkaProducer kafkaProducer;
 
     @GetMapping("/health_check")
     public ServerInfo status() throws Exception {
@@ -64,6 +66,8 @@ public class OrderController {
         OrderDto createdOrder = orderService.createOrder(orderDto);
 
         ResponseOrder responseOrder = modelMapper.map(createdOrder, ResponseOrder.class);
+
+        kafkaProducer.send("example-order-topic", orderDto);
 
         return ResponseEntity.created(URI.create("/orders/" + createdOrder.getOrderId())).body(responseOrder);
     }
