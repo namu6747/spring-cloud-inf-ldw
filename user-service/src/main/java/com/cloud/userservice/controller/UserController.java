@@ -7,6 +7,7 @@ import com.cloud.userservice.service.UserService;
 import com.cloud.userservice.vo.Greeting;
 import com.cloud.userservice.vo.UserCond;
 import com.cloud.userservice.vo.UserResponse;
+import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/health_check")
+    @Timed(value = "users.status", longTask = true)
     public Map<String, Object> status() throws Exception {
         String host = Inet4Address.getLocalHost().getHostAddress();
         String localPort = environment.getProperty("local.server.port");
@@ -56,6 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/welcome")
+    @Timed(value = "users.welcome", longTask = true)
     public String welcome(HttpServletRequest request) throws Exception {
         log.info("InetAddress.getByName(request.getRemoteAddr()) : {}", InetAddress.getByName(request.getRemoteAddr()));
         log.info("request.getRemoteAddr : {}", request.getRemoteAddr());

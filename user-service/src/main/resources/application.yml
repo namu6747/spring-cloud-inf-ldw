@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: user-service
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -20,12 +26,14 @@ spring:
         web-allow-others: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: true
     generate-ddl: true
     defer-datasource-initialization: true
 
-#debug: true
+debug: true
+
+logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
 logging:
   level:
@@ -51,4 +59,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,beans,busrefresh,httptrace
+        include: refresh,health,beans,busrefresh,httptrace,info,prometheus,metrics
