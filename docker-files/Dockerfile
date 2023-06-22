@@ -1,0 +1,5 @@
+FROM mariadb
+ENV MYSQL_ROOT_PASSWORD 1515
+ENV MYSQL_DATABASE mydb
+COPY ./data /var/lib/mysql
+EXPOSE 3307

@@ -94,6 +94,10 @@ spring:
 
 debug: true
 
+logging:
+  level:
+    org.springframework.boot.autoconfigure.logging: error
+
 management:
   endpoints:
     web:
