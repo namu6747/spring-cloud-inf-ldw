@@ -4,7 +4,7 @@ token:
 
 spring:
   datasource:
-    url: jdbc:mariadb://mariadb:3307/mydb
+    url: jdbc:mariadb://127.0.0.1:3307/mydb
     username: root
     password: '{cipher}AQDIIRsmb2Ib1jurOxCHtuhQ/OK3cSukFAzeLP3H9nGyqr4zfg8MX1XgSxIp+gL94jD7v/Lsnpc4Mhw1IlYEyYm1hvRLaDWP472h3CcG7YMLu+38J9MYNoHkd/awS35/8A6XAu2+33O9uTrwDAohGJqeqDjb1p6vUJox/h75XXCCdy0H1dhU7bgXGNArpI9hz2FrCYwuAUdGFFPbkbJpWLqyk0G40sIoF6LwqTYc7mgYhZBi+J+fXGm46B2/Fx+vKwbGrWTTpmpFdiJ9ay/eod7BKQfiSnExwFcTgXGTcBdWkdv8kYbAjOv5i1zlrY4rqxHacoh/9d06CYIxOF1JWgOcjxvONu9N+lS0toJWG/iAYJI5p5yRd+9as60c36FO3+U='
     # url: jdbc:h2:tcp://localhost/~/cloud
