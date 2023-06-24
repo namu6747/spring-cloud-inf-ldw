@@ -1,2 +1,3 @@
 user-service/src/test/java/com/cloud/ignore/
 docker-files/data/
+docker-files/kafka-docker/test/

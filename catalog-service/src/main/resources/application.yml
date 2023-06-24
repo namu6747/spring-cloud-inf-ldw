@@ -18,6 +18,12 @@ spring:
     generate-ddl: true
     # if you use data.sql when application started with creating table
     defer-datasource-initialization: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
 
 eureka:
   instance:
@@ -29,3 +35,9 @@ eureka:
       default-zone: http://127.0.0.1:8761/eureka
 
 debug: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,busrefresh,httptrace,info,prometheus,metrics

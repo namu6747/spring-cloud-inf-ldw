@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.Inet4Address;
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,10 +50,12 @@ public class OrderController {
     @GetMapping("/{userId}/orders")
     public ResponseEntity<List<ResponseOrder>> findOrderAll(@PathVariable("userId") String userId) {
         ModelMapper modelMapper = new ModelMapper();
+        log.info("Before find order by userId");
         List<ResponseOrder> responseOrders = orderService.getOrdersByUserId(userId)
                                                          .stream()
                                                          .map(e -> modelMapper.map(e, ResponseOrder.class))
                                                          .collect(Collectors.toList());
+        log.info("After found order by userId");
         return ResponseEntity.ok(responseOrders);
     }
 
@@ -67,16 +68,17 @@ public class OrderController {
         OrderDto orderDto = modelMapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
         // JPA
-//        OrderDto createdOrder = orderService.createOrder(orderDto);
-//        ResponseOrder responseOrder = modelMapper.map(createdOrder, ResponseOrder.class);
+        OrderDto createdOrder = orderService.createOrder(orderDto);
+        ResponseOrder responseOrder = modelMapper.map(createdOrder, ResponseOrder.class);
 
         // kafka
-        orderDto.setOrderId(UUID.randomUUID().toString());
-        orderDto.setTotalPrice(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-        ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
+//        orderDto.setOrderId(UUID.randomUUID().toString());
+//        orderDto.setTotalPrice(orderDetails.getQuantity() * orderDetails.getUnitPrice());
 
         kafkaProducer.send("example-order-topic", orderDto);
-        orderProducer.send("orders", orderDto);
+//        orderProducer.send("orders", orderDto);
+
+//        ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
 
         return ResponseEntity.created(URI.create("/orders/" + responseOrder.getOrderId())).body(responseOrder);
     }
